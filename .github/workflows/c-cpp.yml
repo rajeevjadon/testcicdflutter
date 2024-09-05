@@ -13,28 +13,35 @@ jobs:
     steps:
     # Checkout the repository
     - uses: actions/checkout@v4
-    
 
-    # Install Flutter (if needed, or remove this if unrelated)
+    # Install Flutter (if needed, or remove if unrelated)
     - name: Install Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.22.3'
 
-    # Compile the code with make
-    - name: Build
-      run: make
+    # Ensure you're in the correct directory and then run make
+    - name: Build the project
+      run: |
+        cd path/to/your/project  # Adjust this to the directory where Makefile is located
+        make
 
-    # Run tests with make check
+    # Run tests if using make
     - name: Run Tests
-      run: make check
+      run: |
+        cd path/to/your/project
+        make check
 
     # Perform make distcheck for validation
     - name: Run Distcheck
-      run: make distcheck
+      run: |
+        cd path/to/your/project
+        make distcheck
     - name: Use Secret Token
       run: echo "The secret token is ${{ secrets.TOKEN }}"
       env:
           MY_SECRET_TOKEN: ${{ secrets.TOKEN }}
+
+
 
 
