@@ -1,0 +1,41 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - uses: actions/checkout@v4
+
+    # Install Flutter
+    - name: Install Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.22.3'
+
+    # Run the configure script
+    - name: configure
+      run: ./configure
+
+    # Compile the code with make
+    - name: make
+      run: make
+
+    # Run tests with make check
+    - name: make check
+      run: make check
+
+    # Perform make distcheck for validation
+    - name: make distcheck
+      run: make distcheck
+    - name: Use Secret Token
+      run: echo "The secret token is ${{ secrets.TOKEN }}"
+      env:
+          MY_SECRET_TOKEN: ${{ secrets.TOKEN }}
